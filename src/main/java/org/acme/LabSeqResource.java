@@ -8,6 +8,8 @@ import jakarta.ws.rs.core.MediaType;
 
 import jakarta.ws.rs.BadRequestException;
 
+import java.math.BigInteger;
+
 
 @Path("/labseq")
 public class LabSeqResource {
@@ -18,8 +20,8 @@ public class LabSeqResource {
     @GET
     @Produces(MediaType.TEXT_PLAIN)
     @Path("/{n}")
-    public Integer greeting(String n) {
-        Integer res = service.labseq(n);
+    public BigInteger  greeting(String n) {
+        BigInteger res = service.labseq(n);
 
         if (res == null) {
             throw new BadRequestException();

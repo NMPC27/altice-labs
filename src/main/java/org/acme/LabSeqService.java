@@ -4,19 +4,21 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.math.BigInteger;
 
 @ApplicationScoped
 public class LabSeqService {
-    private static Map<Integer, Integer> cache = new HashMap<>(); // ter um it que me diz o max number
+    private static Map<Integer, BigInteger> cache = new HashMap<>(); 
+    private static int maxCache = 3;
 
     static {
-        cache.put(0, 0);
-        cache.put(1, 1);
-        cache.put(2, 0);
-        cache.put(3, 1);
+        cache.put(0, BigInteger.ZERO);
+        cache.put(1, BigInteger.ONE);
+        cache.put(2, BigInteger.ZERO);
+        cache.put(3, BigInteger.ONE);
     }
 
-    public static Integer labseq(String num) {
+    public static BigInteger labseq(String num) {
         int n = 0;
 
         try {
@@ -31,22 +33,16 @@ public class LabSeqService {
             return null;
         }
 
-        if (cache.containsKey(n)) {
+        if (n <= maxCache) {
             return cache.get(n);
         }
 
-        int curr_n = 4;
-        for (int i = n; i > 3; i--) {
-            if (cache.containsKey(i)) {
-                curr_n = i + 1;
-                break;
-            }
-        }
-
-        for (int i = curr_n; i <= n; i++) {
-            int next = cache.get(i - 4) + cache.get(i - 3);
+        for (int i = maxCache + 1; i <= n; i++) {
+            BigInteger next = cache.get(i - 4).add(cache.get(i - 3));
             cache.put(i, next);
         }
+
+        maxCache = n;
 
         return cache.get(n);
     }
