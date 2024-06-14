@@ -29,7 +29,7 @@ The production-ready files will be generated in the /target directory.
 
 ## Running Tests Locally
 
-Run the test command
+1. Run the test command
     
     ```bash
     mvn test
